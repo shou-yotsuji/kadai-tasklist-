@@ -1,20 +1,18 @@
 class TasksController < ApplicationController
  before_action :require_user_logged_in
  before_action :correct_user, only: [:show,:edit,:update,:destroy]
-    def index
+  def index
     @tasks = current_user.tasks.order(id: :desc).page(params[:page])
-  
+  end
     
-    end
-    def show
-        
-      
-    end
-    def new
-      @task = Task.new
-     
-    end
-    def create
+  def show
+  end
+    
+  def new
+    @task = Task.new
+  end
+    
+  def create
     @task = current_user.tasks.build(task_params)
     if @task.save
       flash[:success] = 'メッセージを投稿しました。'
@@ -24,7 +22,7 @@ class TasksController < ApplicationController
       flash.now[:danger] = 'メッセージの投稿に失敗しました。'
       render :new
     end
-    end
+  end
 
   def edit
       
@@ -42,15 +40,9 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    
-    
-      
       @task.destroy
-      
-      
-
-    flash[:success] = 'Task は正常に削除されました'
-    redirect_to tasks_url
+      flash[:success] = 'Task は正常に削除されました'
+      redirect_to tasks_url
   end
 
   private
